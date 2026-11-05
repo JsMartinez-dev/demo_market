@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from decimal import Decimal
 
 
-@dataclass
+@dataclass(frozen=True)
 class Product:
-
     product_id: str
     name: str
-    price: Decimal
+    category: str
+    price: int
     stock: int

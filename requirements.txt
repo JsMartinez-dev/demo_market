@@ -1,0 +1,13 @@
+
+fastapi
+uvicorn[standard]
+
+# AWS
+boto3
+
+# Redis
+redis
+
+# Configuration
+pydantic-settings
+python-dotenv
