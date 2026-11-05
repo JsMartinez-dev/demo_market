@@ -1,0 +1,41 @@
+
+services:
+
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: write-through-dynamodb
+
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath ./data
+
+    working_dir: /home/dynamodblocal
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./docker/dynamodb:/home/dynamodblocal/data
+
+    restart: unless-stopped
+
+
+  redis:
+    image: redis:7-alpine
+    container_name: write-through-redis
+
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+
+    ports:
+      - "6379:6379"
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+    restart: unless-stopped
